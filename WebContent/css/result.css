@@ -1,0 +1,186 @@
+/* styles.css */
+
+/* ベースのスタイル */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+
+/* セクションスタイル */
+section {
+    max-width: 1200px;
+    margin-left: 27%; /* メニューの幅+余白を設定 */
+    margin-right: 1%;
+}
+
+/* タイトルスタイル */
+h2 {
+    font-size: 24px;
+    background-color: #bbbbbb; /* 背景色を設定 */
+
+    padding: 10px 20px; /* タイトルの周りに余白を追加 */
+
+}
+.new {
+	text-align: right;
+}
+
+
+/* フォーム全体を囲むスタイル */
+#filter {
+    padding: 20px; /* 内側の余白を追加 */
+    margin-bottom: 20px; /* 下に余白を追加 */
+    display: flex; /* フレックスコンテナにする */
+    align-items: center; /* 要素を中央に揃える */
+    justify-content: space-between; /* 要素を均等に配置する */
+}
+
+/* フォームグループのスタイル */
+.form-group {
+    display: flex;
+    flex-direction: column; /* ラベルとセレクトボックスを縦に配置 */
+    margin-right: 20px; /* 右に余白を追加 */
+}
+
+/* 各ラベルとセレクトボックス/チェックボックスのスタイル */
+.form-group label {
+    margin-bottom: 5px; /* ラベルと入力要素の間に余白を追加 */
+}
+.form-group p {
+        margin-right: 10px; /* 「科目情報」とセレクトボックス間のスペース */
+        align-self: center; /* 中央揃え */
+    }
+
+#filter div {
+    display: flex;
+    flex-direction: column; /* ラベルと入力要素を縦に配置 */
+    margin-right: 20px; /* 各要素の間に余白を追加 */
+}
+
+/* ボタンのスタイル */
+#filter-button {
+    padding: 10px 20px; /* ボタンのパディングを設定 */
+    background-color: #007BFF; /* ボタンの背景色 */
+    color: white; /* ボタンの文字色 */
+    border: none; /* ボタンの境界線をなくす */
+    border-radius: 5px; /* ボタンの角を丸くする */
+    cursor: pointer; /* ホバー時のカーソルをポインターにする */
+}
+
+#filter-button:hover {
+    background-color: #0056b3; /* ホバー時の背景色 */
+}
+#student-f1-select, #student-f2-select {
+    width: 125px; /* セレクトボックスの幅を指定 */
+    height: 35px;
+    border-radius: 5px; /* 角を丸くする */
+    border: 1px solid #ccc; /* 境界線のスタイル */
+
+}
+
+#student-f3-select{
+	 width: 250px; /* セレクトボックスの幅を指定 */
+    height: 35px;
+    border-radius: 5px; /* 角を丸くする */
+    border: 1px solid #ccc; /* 境界線のスタイル */
+}
+
+#filter2 {
+        display: flex;
+        align-items: center; /* 縦方向のセンタリング */
+        gap: 20px; /* 要素間のスペース */
+        justify-content: flex-start; /* 左寄せ */
+    }
+    .form-group2 {
+        display: flex;
+        flex-direction: column;
+        margin-right: 20px; /* 各要素間のスペース */
+    }
+    .form-group2 label, .form-group2 input {
+        margin-bottom: 5px; /* ラベルと入力ボックスの間隔 */
+    }
+#filter2 {
+    padding: 20px; /* 内側の余白を追加 */
+    margin-bottom: 20px; /* 下に余白を追加 */
+    display: flex; /* フレックスコンテナにする */
+}
+
+/* フォームグループのスタイル */
+.form-group2 {
+    display: flex;
+    flex-direction: column; /* ラベルとセレクトボックスを縦に配置 */
+    margin-right: 20px; /* 右に余白を追加 */
+}
+
+/* 各ラベルとセレクトボックス/チェックボックスのスタイル */
+.form-group2 label {
+    margin-bottom: 5px; /* ラベルと入力要素の間に余白を追加 */
+}
+.form-group2 p {
+        margin-right: 10px; /* 「科目情報」とセレクトボックス間のスペース */
+        align-self: center; /* 中央揃え */
+    }
+
+#filter2 div {
+    display: flex;
+    flex-direction: column; /* ラベルと入力要素を縦に配置 */
+    margin-right: 20px; /* 各要素の間に余白を追加 */
+}
+
+/* ボタンのスタイル */
+#filter-button2 {
+    padding: 10px 20px; /* ボタンのパディングを設定 */
+    background-color: #007BFF; /* ボタンの背景色 */
+    color: white; /* ボタンの文字色 */
+    border: none; /* ボタンの境界線をなくす */
+    border-radius: 5px; /* ボタンの角を丸くする */
+    cursor: pointer; /* ホバー時のカーソルをポインターにする */
+}
+
+#filter-button:hover2 {
+    background-color: #0056b3; /* ホバー時の背景色 */
+}
+#subject-name {
+        width: 250px; /* 幅を150ピクセルに設定 */
+        height: 25px;
+border-radius: 5px; /* 角を丸くする */
+    border: 1px solid #ccc; /* 境界線のスタイル */    }
+
+.info-message p {
+        color: #00BFFF; /* 水色に設定 */
+    }
+
+.subject-table table {
+        width: 90%;
+border-collapse: collapse;
+    }
+.subject-table th, td {
+	border-bottom: 1px solid #ddd; /* 下部にのみ横線を追加 */
+        padding: 8px; /* セル内のパディング */
+        text-align: left; /* 左寄せ */
+    }
+#box{
+
+    border: 2px solid #DDDDDD; /* 境界線のスタイルと色を指定 */
+    border-radius: 10px; /* 角を丸くする（オプション） */
+}
+hr {
+    width: 90%;
+    color: #DDDDDD;
+    background-color: #DDDDDD;
+    border: none;
+    height: 2px;
+}
+.subject-table2 table {
+        width: 90%;
+border-collapse: collapse;
+    }
+
+.subject-table2 th, td {
+	border-bottom: 1px solid #ddd; /* 下部にのみ横線を追加 */
+        padding: 8px; /* セル内のパディング */
+        text-align: left; /* 左寄せ */
+    }
