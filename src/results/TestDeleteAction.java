@@ -14,31 +14,37 @@ import tool.Action;
 import tool.Util;
 
 public class TestDeleteAction extends Action {
-    public void execute(
-    			HttpServletRequest req, HttpServletResponse res
-    		) throws Exception {
-		Util util=new Util();
+
+    /**
+     * HTTPリクエストからテスト情報を取得し、削除リクエストをJSPに転送します。
+     * @param req HTTPリクエスト
+     * @param res HTTPレスポンス
+     * @throws Exception 処理中に発生する可能性のある例外
+     */
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+        Util util = new Util();
 
         List<Test> tests = new ArrayList<>();
         Teacher teacher = util.getUser(req);
 
-        String student_nos[] = req.getParameterValues("student_no");
-        String subject_cds[] = req.getParameterValues("subject_cd");
-        String class_nums[] = req.getParameterValues("class_num");
-        String nostr[] = req.getParameterValues("test_no");
-        String count = req.getParameter("count");
+        // リクエストからパラメータを取得
+        String[] studentNos = req.getParameterValues("student_no");
+        String[] subjectCds = req.getParameterValues("subject_cd");
+        String[] classNums = req.getParameterValues("class_num");
+        String[] nostr = req.getParameterValues("test_no");
+        String countStr = req.getParameter("count");
 
+        int count = Integer.parseInt(countStr);
 
-        for (int i = 0; i < Integer.parseInt(count); i++) {
-
-        	Student student = new Student();
+        for (int i = 0; i < count; i++) {
+            Student student = new Student();
             Subject subject = new Subject();
-        	Test test = new Test();
+            Test test = new Test();
 
             int no = Integer.parseInt(nostr[i]);
-            String studentNo = student_nos[i];
-            String subjectCd = subject_cds[i];
-            String classNum = class_nums[i];
+            String studentNo = studentNos[i];
+            String subjectCd = subjectCds[i];
+            String classNum = classNums[i];
 
             student.setNo(studentNo);
             subject.setCd(subjectCd);
@@ -51,8 +57,11 @@ public class TestDeleteAction extends Action {
 
             tests.add(test);
         }
+
+        // テスト情報をリクエストスコープにセット
         req.setAttribute("tests", tests);
 
+        // JSPに転送
         req.getRequestDispatcher("../results/regist_delete.jsp").forward(req, res);
     }
 }

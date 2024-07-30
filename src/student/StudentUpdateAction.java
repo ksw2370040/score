@@ -1,5 +1,6 @@
 package student;
 
+// 必要なクラスをインポート
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,30 +13,37 @@ import dao.ClassNumDao;
 import dao.StudentDao;
 import tool.Action;
 
-public class StudentUpdateAction extends Action{
-	public void execute(
-			HttpServletRequest req,HttpServletResponse res
-		)throws Exception{
-			String no =  req.getParameter("no");
-			StudentDao dao= new StudentDao();
-			Student student =null;
-			student=dao.get(no);
-			req.setAttribute("student", student);
+public class StudentUpdateAction extends Action {
 
-			HttpSession session = req.getSession();
-			Teacher teacher =(Teacher) session.getAttribute("user");
+    // HTTPリクエストに基づくアクションの実行
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
-			String classNum=req.getParameter("class_num");
+        // リクエストパラメータから学生番号を取得
+        String no = req.getParameter("no");
 
-			ClassNumDao cNumDao=new ClassNumDao();
+        // StudentDaoのインスタンスを作成し、指定された学生番号に基づいて学生情報を取得
+        StudentDao dao = new StudentDao();
+        Student student = dao.get(no);
 
+        // 学生オブジェクトをリクエスト属性に設定
+        req.setAttribute("student", student);
 
-			List<String> list = cNumDao.filter(teacher.getSchool());
-			req.setAttribute("class_num", classNum);
+        // セッションから教師情報を取得
+        HttpSession session = req.getSession();
+        Teacher teacher = (Teacher) session.getAttribute("user");
 
-			req.setAttribute("class_num_set", list);
-			req.getRequestDispatcher("../student/student_update.jsp").forward(req, res);
+        // リクエストパラメータからクラス番号を取得
+        String classNum = req.getParameter("class_num");
 
+        // ClassNumDaoのインスタンスを作成し、教師の学校に基づいてクラス番号のリストを取得
+        ClassNumDao cNumDao = new ClassNumDao();
+        List<String> list = cNumDao.filter(teacher.getSchool());
 
-	}
+        // クラス番号とクラス番号セットをリクエスト属性に設定
+        req.setAttribute("class_num", classNum);
+        req.setAttribute("class_num_set", list);
+
+        // student_update.jspにフォワード
+        req.getRequestDispatcher("../student/student_update.jsp").forward(req, res);
+    }
 }

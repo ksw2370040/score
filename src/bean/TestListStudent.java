@@ -1,35 +1,52 @@
 package bean;
-public class TestListStudent implements java.io.Serializable {
-	private String subjectName;
-	private String subjectCd;
-	private int num;
-	private int point;
 
+public class TestListStudent implements java.io.Serializable {
+    // 科目名を保持するフィールド
+    private String subjectName;
+    // 科目コードを保持するフィールド
+    private String subjectCd;
+    // テストの番号を保持するフィールド
+    private int num;
+    // テストの得点を保持するフィールド
+    private int point;
+
+    // subjectNameフィールドのゲッターメソッド
     public String getSubjectName() {
         return subjectName;
     }
-    public void setSubjectName(String subjectName){
-    	this.subjectName=subjectName;
+
+    // subjectNameフィールドのセッターメソッド
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
     }
 
+    // subjectCdフィールドのゲッターメソッド
     public String getSubjectCd() {
         return subjectCd;
     }
-    public void setSubjectCd(String subjectCd){
-    	this.subjectCd=subjectCd;
+
+    // subjectCdフィールドのセッターメソッド
+    public void setSubjectCd(String subjectCd) {
+        this.subjectCd = subjectCd;
     }
 
-    public int getNum(){
-    	return num;
-    }
-    public void setNum(int num){
-    	this.num=num;
+    // numフィールドのゲッターメソッド
+    public int getNum() {
+        return num;
     }
 
-    public int getPoint(){
-    	return point;
+    // numフィールドのセッターメソッド
+    public void setNum(int num) {
+        this.num = num;
     }
-    public void setPoint(int point){
-    	this.point=point;
+
+    // pointフィールドのゲッターメソッド
+    public int getPoint() {
+        return point;
+    }
+
+    // pointフィールドのセッターメソッド
+    public void setPoint(int point) {
+        this.point = point;
     }
 }

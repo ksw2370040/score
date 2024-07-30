@@ -4,11 +4,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>共通エラーページ</title>
+    <meta charset="UTF-8">
+    <title>共通エラーページ</title>
 </head>
 <body>
-<p>${error}</p>
-<p><%=exception.getMessage()%></p>
+    <!-- エラーオブジェクトを表示 -->
+    <p>${error}</p>
+    <!-- 例外のメッセージを表示 -->
+    <p><%=exception.getMessage()%></p>
 </body>
 </html>

@@ -6,18 +6,21 @@ import javax.servlet.http.HttpSession;
 
 import tool.Action;
 
-public class LogoutAction extends Action{
-	public void execute(
-		HttpServletRequest req,HttpServletResponse res
-	)throws Exception{
-		HttpSession session=req.getSession();
+public class LogoutAction extends Action {
+    @Override
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+        // 現在のセッションを取得
+        HttpSession session = req.getSession();
 
-		if(session.getAttribute("user")!=null){
-			session.removeAttribute("user");
-			req.getRequestDispatcher("../user/logout.jsp").forward(req, res);
-			}
-		req.getRequestDispatcher("../common/error.jsp").forward(req, res);
-
-	}
-
+        // セッションに「user」属性が存在する場合
+        if (session.getAttribute("user") != null) {
+            // ユーザー情報をセッションから削除
+            session.removeAttribute("user");
+            // ログアウト完了ページにフォワード
+            req.getRequestDispatcher("../user/logout.jsp").forward(req, res);
+        } else {
+            // ユーザーがログインしていない場合はエラーページにフォワード
+            req.getRequestDispatcher("../common/error.jsp").forward(req, res);
+        }
+    }
 }

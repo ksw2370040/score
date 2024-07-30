@@ -1,167 +1,173 @@
+/* ヘッダーのスタイル設定 */
 header {
-    background-color: #D9E5FF;
-    width: 100%;
-    padding: 10px 0;
-    margin: 0 auto;
-    }
+    background-color: #D9E5FF; /* ヘッダーの背景色 */
+    width: 100%; /* ヘッダーの幅を100%に設定 */
+    padding: 10px 0; /* ヘッダーの上下にパディングを追加 */
+    margin: 0 auto; /* マージンを自動で中央揃え */
+}
 
-
+/* ヘッダー内の子要素のスタイル設定 */
 header .header {
-    margin-right: 10px;
-    margin-bottom: 20px;
-    width: 100%;
-     text-align: right;
+    margin-right: 10px; /* 右側のマージン */
+    margin-bottom: 20px; /* 下側のマージン */
+    width: 100%; /* 幅を100%に設定 */
+    text-align: right; /* テキストを右揃え */
 }
 
 header h1 {
-    margin-left: 10px;
-    text-align: left;
+    margin-left: 10px; /* 左側のマージン */
+    text-align: left; /* テキストを左揃え */
 }
 
-}
+/* ヘッダー内のスパンとアンカーのスタイル設定 */
 .header span,
 .header a {
-    margin-left: 10px;
-     text-align: right;
+    margin-left: 10px; /* 左側のマージン */
+    text-align: right; /* テキストを右揃え */
 }
-body{
-	margin:0;
-	 align-items: center;
+
+/* ボディのスタイル設定 */
+body {
+    margin: 0; /* マージンを0に設定 */
+    align-items: center; /* 中央揃え */
 }
+
+/* フッターのスタイル設定 */
 footer {
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  	display: inline-block;
-	position: relative;
-
-  background: #dcdcdc;
-  margin:0;
-  	padding: 0;
-
+    left: 0; /* 左端に配置 */
+    bottom: 0; /* 下端に配置 */
+    width: 100%; /* 幅を100%に設定 */
+    display: inline-block; /* インラインブロック表示 */
+    position: relative; /* 相対位置指定 */
+    background: #dcdcdc; /* 背景色 */
+    margin: 0; /* マージンを0に設定 */
+    padding: 0; /* パディングを0に設定 */
 }
-footer p{
-  display: flex;
-  justify-content: center;
-    margin:5px;
-}
-.sidebar{
-	float:left;
-	margin-right:10%;
-	display: inline-block;
-	position: relative;
-	line-height:200%;
-    margin-left: 9%;
-    margin-right: 60px;
-    height:100vh;
-    padding-right: 10%;
-    border-right: 2px solid #DDDDDD;
-    text-align: left;
 
+/* フッター内の段落のスタイル設定 */
+footer p {
+    display: flex; /* フレックスボックス表示 */
+    justify-content: center; /* 中央揃え */
+    margin: 5px; /* マージンを5pxに設定 */
 }
-.sidebar ul{
-	padding-left:0;
 
-
+/* サイドバーのスタイル設定 */
+.sidebar {
+    float: left; /* 左に浮かせる */
+    margin-right: 10%; /* 右側のマージン */
+    display: inline-block; /* インラインブロック表示 */
+    position: relative; /* 相対位置指定 */
+    line-height: 200%; /* 行の高さを200%に設定 */
+    margin-left: 9%; /* 左側のマージン */
+    margin-right: 60px; /* 右側のマージン */
+    height: 100vh; /* 高さを100vhに設定 */
+    padding-right: 10%; /* 右側のパディング */
+    border-right: 2px solid #DDDDDD; /* 右側の境界線 */
+    text-align: left; /* テキストを左揃え */
 }
+
+/* サイドバー内のリストのスタイル設定 */
+.sidebar ul {
+    padding-left: 0; /* 左側のパディングを0に設定 */
+}
+
+/* サイドバー内のリストアイテムのスタイル設定 */
 .sidebar li {
-    list-style: none;
-
+    list-style: none; /* リストスタイルをなしに設定 */
 }
 
-
-#score{
-	margin-left:10px;
+/* #score IDのスタイル設定 */
+#score {
+    margin-left: 10px; /* 左側のマージン */
 }
-#title{
 
-}
-<<<<<<< HEAD
+/* .boxクラスのスタイル設定 */
 .box {
-    border: #dddddd 1px solid; /* 境界線の指定 */
-    padding: 10px;
-    width: 300%; /* 幅を50%に設定 */
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
+    border: #dddddd 1px solid; /* 境界線の設定 */
+    padding: 10px; /* パディングを10pxに設定 */
+    width: 300%; /* 幅を300%に設定 */
+    box-sizing: border-box; /* ボックスサイズを境界線込みで計算 */
+    display: flex; /* フレックスボックス表示 */
+    flex-direction: column; /* 縦方向のフレックスボックス */
+    align-items: center; /* 中央揃え */
 }
 
-
-
+/* .box-containerクラスのスタイル設定 */
 .box-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    flex-grow: 1;
+    display: flex; /* フレックスボックス表示 */
+    justify-content: center; /* 中央揃え */
+    align-items: center; /* 中央揃え */
+    width: 100%; /* 幅を100%に設定 */
+    flex-grow: 1; /* フレックスアイテムの成長 */
 }
 
+/* .login-boxクラスのスタイル設定 */
 .login-box {
-    border: 1px solid #dddddd;
-    padding: 20px;
-    width: 500px;
-    height: 400px;
-    box-sizing: border-box;
-    background-color: #f9f9f9;
-    text-align: center;
+    border: 1px solid #dddddd; /* 境界線の設定 */
+    padding: 20px; /* パディングを20pxに設定 */
+    width: 500px; /* 幅を500pxに設定 */
+    height: 400px; /* 高さを400pxに設定 */
+    box-sizing: border-box; /* ボックスサイズを境界線込みで計算 */
+    background-color: #f9f9f9; /* 背景色 */
+    text-align: center; /* テキストを中央揃え */
 }
 
+/* .login-box内のh2要素のスタイル設定 */
 .login-box h2 {
-    background-color: #dddddd;
-    margin: -20px -20px 20px -20px;
-    padding: 15px;
-    width: calc(100% + 40px);
-    box-sizing: border-box;
-    text-align: center;
+    background-color: #dddddd; /* 背景色 */
+    margin: -20px -20px 20px -20px; /* マージンの設定 */
+    padding: 15px; /* パディングを15pxに設定 */
+    width: calc(100% + 40px); /* 幅を100% + 40pxに設定 */
+    box-sizing: border-box; /* ボックスサイズを境界線込みで計算 */
+    text-align: center; /* テキストを中央揃え */
 }
 
-
+/* .subクラスのスタイル設定 */
 .sub {
-	width: 22%;
-	height: 20%;
-	margin: 10px;
-	line-height: 7;
-    text-align: center;
-	background-color: #FF97C2;
-	border-radius: 10px;
-	position: absolute;
-	top: 240px;
-	left: 320px;
+    width: 22%; /* 幅を22%に設定 */
+    height: 20%; /* 高さを20%に設定 */
+    margin: 10px; /* マージンを10pxに設定 */
+    line-height: 7; /* 行の高さを7に設定 */
+    text-align: center; /* テキストを中央揃え */
+    background-color: #FF97C2; /* 背景色 */
+    border-radius: 10px; /* 角を10pxに丸める */
+    position: absolute; /* 絶対位置指定 */
+    top: 240px; /* 上端から240pxの位置 */
+    left: 320px; /* 左端から320pxの位置 */
 }
 
+/* .sub2クラスのスタイル設定 */
 .sub2 {
-	width: 22%;
-	height: 20%;
-	margin: 10px 0;
-	line-height: 1.3;
-	text-align: center;
-	background-color: #93FFAB;
-	border-radius: 10px;
-	position: absolute;
-	top: 240px;
-	left: 630px;
-	line-height: 90%;
-
+    width: 22%; /* 幅を22%に設定 */
+    height: 20%; /* 高さを20%に設定 */
+    margin: 10px 0; /* 上下のマージンを10pxに設定 */
+    line-height: 1.3; /* 行の高さを1.3に設定 */
+    text-align: center; /* テキストを中央揃え */
+    background-color: #93FFAB; /* 背景色 */
+    border-radius: 10px; /* 角を10pxに丸める */
+    position: absolute; /* 絶対位置指定 */
+    top: 240px; /* 上端から240pxの位置 */
+    left: 630px; /* 左端から630pxの位置 */
+    line-height: 90%; /* 行の高さを90%に設定 */
 }
 
+/* .sub3クラスのスタイル設定 */
 .sub3 {
-	width: 22%;
-	height: 20%;
-	line-height: 7;
-	margin: 10px;
-	text-align: center;
-	background-color: #C299FF;
-	border-radius: 10px;
-	position: absolute;
-	top: 240px;
-	left: 920px;
+    width: 22%; /* 幅を22%に設定 */
+    height: 20%; /* 高さを20%に設定 */
+    line-height: 7; /* 行の高さを7に設定 */
+    margin: 10px; /* マージンを10pxに設定 */
+    text-align: center; /* テキストを中央揃え */
+    background-color: #C299FF; /* 背景色 */
+    border-radius: 10px; /* 角を10pxに丸める */
+    position: absolute; /* 絶対位置指定 */
+    top: 240px; /* 上端から240pxの位置 */
+    left: 920px; /* 左端から920pxの位置 */
 }
+
+/* h2要素のスタイル設定 */
 h2 {
-    font-size: 24px;
-    background-color: #bbbbbb; /* 背景色を設定 */
-
-    padding: 10px 20px; /* タイトルの周りに余白を追加 */
-
+    font-size: 24px; /* フォントサイズを24pxに設定 */
+    background-color: #bbbbbb; /* 背景色 */
+    padding: 10px 20px; /* パディングを10px上下、20px左右に設定 */
 }

@@ -12,45 +12,48 @@ import bean.Teacher;
 import dao.ClassNumDao;
 import dao.SubjectDao;
 
-public class Util{
-public Teacher getUser(HttpServletRequest req)
-	throws Exception{
-		HttpSession session = req.getSession();
-		Teacher user =(Teacher) session.getAttribute("user");
-		return user;
-	}
-public void setClassNum(HttpServletRequest req)
-	throws Exception{
-	Teacher teacher = getUser(req);
-	ClassNumDao cNumDao=new ClassNumDao();
-	List<String> list = cNumDao.filter(teacher.getSchool());
-	req.setAttribute("class_num_set", list);
-	}
-public void setEntYearSet(HttpServletRequest req)
-	throws Exception{
-	LocalDate todaysDate=LocalDate.now();
+public class Util {
 
-	int year=todaysDate.getYear();
-	List<Integer> entYearSet = new ArrayList<>();
-	for (int i = year - 10; i < year +1; i++){
-		entYearSet.add(i);
-	}
+    // セッションからユーザー情報を取得するメソッド
+    public Teacher getUser(HttpServletRequest req) throws Exception {
+        HttpSession session = req.getSession();
+        Teacher user = (Teacher) session.getAttribute("user");
+        return user;
+    }
 
-	req.setAttribute("ent_year_set", entYearSet);
-	}
-public void setSubject(HttpServletRequest req)
-	throws Exception{
-	Teacher user = getUser(req);
-	SubjectDao subjectDao= new SubjectDao();
-	List<Subject> subjects = subjectDao.filter(user.getSchool());
-	req.setAttribute("subjects", subjects);
-	}
-public void setNumSet(HttpServletRequest req)
-	throws Exception{
-	List<Integer> number = new ArrayList<>();
-	for (int i = 1; i <= 10; i++){
-	number.add(i);
-	}
-	req.setAttribute("number", number);
-	}
+    // クラス番号のリストをリクエストに設定するメソッド
+    public void setClassNum(HttpServletRequest req) throws Exception {
+        Teacher teacher = getUser(req);
+        ClassNumDao cNumDao = new ClassNumDao();
+        List<String> list = cNumDao.filter(teacher.getSchool());
+        req.setAttribute("class_num_set", list);
+    }
+
+    // 年度のリストをリクエストに設定するメソッド
+    public void setEntYearSet(HttpServletRequest req) throws Exception {
+        LocalDate todaysDate = LocalDate.now();
+        int year = todaysDate.getYear();
+        List<Integer> entYearSet = new ArrayList<>();
+        for (int i = year - 10; i < year + 1; i++) {
+            entYearSet.add(i);
+        }
+        req.setAttribute("ent_year_set", entYearSet);
+    }
+
+    // 科目のリストをリクエストに設定するメソッド
+    public void setSubject(HttpServletRequest req) throws Exception {
+        Teacher user = getUser(req);
+        SubjectDao subjectDao = new SubjectDao();
+        List<Subject> subjects = subjectDao.filter(user.getSchool());
+        req.setAttribute("subjects", subjects);
+    }
+
+    // 数値のリストをリクエストに設定するメソッド
+    public void setNumSet(HttpServletRequest req) throws Exception {
+        List<Integer> number = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) {
+            number.add(i);
+        }
+        req.setAttribute("number", number);
+    }
 }

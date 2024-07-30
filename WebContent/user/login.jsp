@@ -6,6 +6,7 @@
     <title>得点管理システム</title>
     <link href="../css/stylesheet.css" rel="stylesheet" />
     <style>
+        /* フォームグループのスタイル設定 */
         .form-group {
             position: relative;
             margin-bottom: 20px;
@@ -56,6 +57,7 @@
         <h2>ログイン</h2>
         <form action="../user/LoginExecute.action" method="post">
             <%
+                // リクエスト属性からログインエラーメッセージを取得し、表示する
                 String loginError = (String) request.getAttribute("loginError");
                 if (loginError != null) {
             %>

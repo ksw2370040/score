@@ -23,7 +23,7 @@ import tool.Action;
 import tool.Util;
 
 public class TestListAction extends Action {
-	public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
         Util util = new Util();
         Student student = new Student();
         StudentDao stuDao = new StudentDao();
@@ -32,6 +32,7 @@ public class TestListAction extends Action {
 
         Teacher teacher = util.getUser(req);
 
+        // リクエストからパラメータを取得
         String entYearStr = req.getParameter("f1");
         String classNum = req.getParameter("f2");
         String subjectCd = req.getParameter("f3");
@@ -48,67 +49,52 @@ public class TestListAction extends Action {
         ClassNumDao cNumDao = new ClassNumDao();
 
         List<String> list = cNumDao.filter(teacher.getSchool());
-		Map<String, String> errors=new HashMap<>();
-
-
-
+        Map<String, String> errors = new HashMap<>();
 
         subject.setCd(subjectCd);
-
         student.setNo(studentNo);
         student.setSchool(teacher.getSchool());
 
-            if (entYearStr != null && !entYearStr.isEmpty()) {
-                entYear = Integer.parseInt(entYearStr);
+        // 年度のパラメータが指定されている場合の処理
+        if (entYearStr != null && !entYearStr.isEmpty()) {
+            entYear = Integer.parseInt(entYearStr);
+        }
+
+        // 条件に基づくデータ取得
+        if (entYear != 0 && !classNum.equals("0") && !subjectCd.equals("0")) {
+            try {
+                TLsubs = TLsubDao.filter(entYear, classNum, subject, teacher.getSchool());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-            if (entYear != 0 && !classNum.equals("0") && !subject.equals("0")) {
-                try {
-                    TLsubs = TLsubDao.filter(entYear, classNum, subject, teacher.getSchool());
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-
-                }
-            }else if (studentNo != null && !studentNo.equals("0") ) {
-                try {
-                    TLstus = TLstuDao.filter(student);
-                    student = stuDao.get(studentNo);
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }else{
-
-				errors.put("f1","入学年度とクラスと科目を選択してください。");
-				req.setAttribute("errors", errors);
-                req.setAttribute("nosearch", true);
-
-
+        } else if (studentNo != null && !studentNo.equals("0")) {
+            try {
+                TLstus = TLstuDao.filter(student);
+                student = stuDao.get(studentNo);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+        } else {
+            errors.put("f1", "入学年度とクラスと科目を選択してください。");
+            req.setAttribute("errors", errors);
+            req.setAttribute("nosearch", true);
+        }
 
-
-
-
+        // 年度と科目のリストを取得
         List<Integer> entYearSet = new ArrayList<>();
         for (int i = year - 10; i <= year; i++) {
             entYearSet.add(i);
         }
 
-        List<Subject> subjectSet = new ArrayList<>();
-        subjectSet = subDao.filter(teacher.getSchool());
+        List<Subject> subjectSet = subDao.filter(teacher.getSchool());
 
-
-
-
+        // リクエストに属性を設定してJSPに転送
         req.setAttribute("f1", entYear);
         req.setAttribute("f2", classNum);
         req.setAttribute("f3", subjectCd);
         req.setAttribute("f4", studentNo);
         req.setAttribute("TLsubs", TLsubs);
-        req.setAttribute("TLstus",TLstus);
+        req.setAttribute("TLstus", TLstus);
         req.setAttribute("stu", student);
         req.setAttribute("subs", subjectSet);
         req.setAttribute("class_num_set", list);

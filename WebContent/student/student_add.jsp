@@ -7,34 +7,42 @@
     <title>学生管理</title>
     <link rel="stylesheet" type="text/css" href="../css/student-add.css">
     <script>
+        // フォームのバリデーションを行う関数
         function validateForm() {
-            var f1Select = document.getElementById('student-f1-create');
-            var f2Select = document.getElementById('student-f2-create');
-            var f1Error = document.getElementById('f1-error');
-            var f2Error = document.getElementById('f2-error');
-            var studentNo = document.getElementById('student-no');
-            var studentName = document.getElementById('student-name');
-            var studentNoError = document.getElementById('student-no-error');
-            var studentNameError = document.getElementById('student-name-error');
+            var f1Select = document.getElementById('student-f1-create'); // 入学年度セレクトボックス
+            var f2Select = document.getElementById('student-f2-create'); // クラスセレクトボックス
+            var f1Error = document.getElementById('f1-error'); // 入学年度エラーメッセージ
+            var f2Error = document.getElementById('f2-error'); // クラスエラーメッセージ
+            var studentNo = document.getElementById('student-no'); // 学生番号入力フィールド
+            var studentName = document.getElementById('student-name'); // 氏名入力フィールド
+            var studentNoError = document.getElementById('student-no-error'); // 学生番号エラーメッセージ
+            var studentNameError = document.getElementById('student-name-error'); // 氏名エラーメッセージ
 
+            // 入学年度とクラスが選択されていない場合、エラーメッセージを表示
             f1Error.style.display = f1Select.value === '0' ? 'block' : 'none';
             f2Error.style.display = f2Select.value === '0' ? 'block' : 'none';
+            // 学生番号と氏名が空である場合、エラーメッセージを表示
             studentNoError.style.display = studentNo.value.trim() === '' ? 'block' : 'none';
             studentNameError.style.display = studentName.value.trim() === '' ? 'block' : 'none';
 
+            // バリデーションが成功した場合のみ、フォームを送信
             return f1Select.value !== '0' && f2Select.value !== '0' && studentNo.value.trim() !== '' && studentName.value.trim() !== '';
         }
+
+        // JSPから渡された既存の学生番号の配列を取得
         const existingCodes = [
             <c:forEach var="code" items="${existingSubjectCodes}">
                 "${code}"<c:if test="${!status.last}">,</c:if>
             </c:forEach>
         ];
 
-        console.log(existingCodes);
+        console.log(existingCodes); // 既存の学生番号をコンソールに出力
 
+        // 学生番号が既に存在するかどうかを確認する関数
         function checkDuplicate() {
             const inputCode = document.getElementById("student-no").value;
 
+            // 入力された学生番号が既存の番号と一致する場合、アラートを表示
             if (existingCodes.includes(inputCode)) {
                 alert("この学生番号は既に存在します。");
                 return false;
@@ -42,7 +50,6 @@
 
             return true;
         }
-
     </script>
 </head>
 <body>
@@ -52,11 +59,13 @@
     <c:param name="content">
         <section class="me-4">
             <h2>学生情報登録</h2>
-         	<c:if test="${not empty error}">
-			        <p style="color: red;">${error}</p>
-			        <c:set var="error" value="${null}" scope="session" />
-			</c:if>
+            <!-- エラーメッセージが存在する場合、表示 -->
+            <c:if test="${not empty error}">
+                <p style="color: red;">${error}</p>
+                <c:set var="error" value="${null}" scope="session" />
+            </c:if>
 
+            <!-- 学生情報を登録するフォーム -->
             <form action="StudentCreateExecute.action" method="get" onsubmit="return validateForm()">
                 <div id="filter">
                     <div>
@@ -67,7 +76,7 @@
                                 <option value="${year}" <c:if test="${year==ent_year }">selected</c:if>>${year}</option>
                             </c:forEach>
                         </select>
-                        <div id="f1-error" class="error-message" style="display:none; color:orange;" >入学年度を選択してください。</div>
+                        <div id="f1-error" class="error-message" style="display:none; color:orange;">入学年度を選択してください。</div>
                     </div>
                     <div>
                         <label for="student-no">学生番号</label>

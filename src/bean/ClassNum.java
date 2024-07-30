@@ -1,19 +1,28 @@
 package bean;
 
 public class ClassNum implements java.io.Serializable {
+    // Schoolクラスのインスタンスを保持するフィールド
     private School school;
+    // クラス番号を保持するフィールド
     private String classNum;
 
+    // schoolフィールドのゲッターメソッド
     public School getSchool() {
         return school;
     }
-    public void setSchool(School school){
-    	this.school=school;
+
+    // schoolフィールドのセッターメソッド
+    public void setSchool(School school) {
+        this.school = school;
     }
-    public String getClassNum(){
-    	return classNum;
+
+    // classNumフィールドのゲッターメソッド
+    public String getClassNum() {
+        return classNum;
     }
-    public void setClassNum(String classNum){
-    	this.classNum=classNum;
+
+    // classNumフィールドのセッターメソッド
+    public void setClassNum(String classNum) {
+        this.classNum = classNum;
     }
 }

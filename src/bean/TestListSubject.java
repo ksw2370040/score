@@ -3,56 +3,78 @@ package bean;
 import java.util.Map;
 
 public class TestListSubject implements java.io.Serializable {
-	private int entYear;
-	private String studentNo;
-	private String studentName;
-	private String classNum;
-	private Map<Integer, Integer> points;
+    // 入学年度を保持するフィールド
+    private int entYear;
+    // 学生番号を保持するフィールド
+    private String studentNo;
+    // 学生の名前を保持するフィールド
+    private String studentName;
+    // クラス番号を保持するフィールド
+    private String classNum;
+    // テストの得点を保持するマップ
+    private Map<Integer, Integer> points;
 
-	public TestListSubject(){}
+    // デフォルトコンストラクタ
+    public TestListSubject() {}
 
+    // entYearフィールドのゲッターメソッド
+    public int getEntYear() {
+        return entYear;
+    }
 
-	public int getEntYear(){
-		return entYear;
-	}
-	public void setEntYear(int entYear){
-		this.entYear=entYear;
-	}
+    // entYearフィールドのセッターメソッド
+    public void setEntYear(int entYear) {
+        this.entYear = entYear;
+    }
 
-	public String getStudentNo(){
-		return studentNo;
-	}
-	public void setStudentNo(String studentNo){
-		this.studentNo=studentNo;
-	}
+    // studentNoフィールドのゲッターメソッド
+    public String getStudentNo() {
+        return studentNo;
+    }
 
-	public String getStudentName(){
-		return studentName;
-	}
-	public void setStudentName(String studentName){
-		this.studentName=studentName;
-	}
+    // studentNoフィールドのセッターメソッド
+    public void setStudentNo(String studentNo) {
+        this.studentNo = studentNo;
+    }
 
-	public String getClassNum(){
-		return classNum;
-	}
-	public void setClassNum(String classNum){
-		this.classNum=classNum;
-	}
+    // studentNameフィールドのゲッターメソッド
+    public String getStudentName() {
+        return studentName;
+    }
 
-	public Map<Integer, Integer> getPoints(){
-		return points;
-	}
-	public void setPoints(Map<Integer, Integer> points){
-		this.points=points;
-	}
+    // studentNameフィールドのセッターメソッド
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
 
-	public String getPoint(int key){
-		String point=String.valueOf(this.points.get(key));
-		return point;
-	}
+    // classNumフィールドのゲッターメソッド
+    public String getClassNum() {
+        return classNum;
+    }
 
-	public void putPoint(int key, int value){
-		points.put(key, value);
-	}
+    // classNumフィールドのセッターメソッド
+    public void setClassNum(String classNum) {
+        this.classNum = classNum;
+    }
+
+    // pointsフィールドのゲッターメソッド
+    public Map<Integer, Integer> getPoints() {
+        return points;
+    }
+
+    // pointsフィールドのセッターメソッド
+    public void setPoints(Map<Integer, Integer> points) {
+        this.points = points;
+    }
+
+    // 指定されたキーの得点を取得するメソッド
+    public String getPoint(int key) {
+        String point = String.valueOf(this.points.get(key));
+        return point;
+    }
+
+    // 指定されたキーと値をマップに追加するメソッド
+    public void putPoint(int key, int value) {
+        points.put(key, value);
+    }
 }

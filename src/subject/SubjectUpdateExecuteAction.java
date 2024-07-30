@@ -10,29 +10,31 @@ import dao.SubjectDao;
 import tool.Action;
 import tool.Util;
 
-public class SubjectUpdateExecuteAction extends Action{
-	public void execute(
-			HttpServletRequest req,HttpServletResponse res
-		)throws Exception{
-		Util util = new Util();
-		Teacher teacher = util.getUser(req);
-		String cd = req.getParameter("cd");
-		String Name = req.getParameter("name");
-		School school= teacher.getSchool();
+public class SubjectUpdateExecuteAction extends Action {
 
+    // HTTPリクエストに基づくアクションの実行
+    public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
 
-		Subject subject =new Subject();
-		subject.setCd(cd);
-		subject.setName(Name);
-		subject.setSchool(school);
+        // ユーザー情報を取得
+        Util util = new Util();
+        Teacher teacher = util.getUser(req);
 
+        // リクエストパラメータから科目コードと科目名を取得
+        String cd = req.getParameter("cd");
+        String Name = req.getParameter("name");
+        School school = teacher.getSchool();
 
-		SubjectDao dao = new SubjectDao();
-		dao.save(subject);
-		req.getRequestDispatcher("../subject/subject_update_complete.jsp").forward(req, res);
+        // 更新する科目の情報を設定
+        Subject subject = new Subject();
+        subject.setCd(cd);
+        subject.setName(Name);
+        subject.setSchool(school);
 
+        // SubjectDaoのインスタンスを作成し、科目情報を保存
+        SubjectDao dao = new SubjectDao();
+        dao.save(subject);
 
-
-		}
-
+        // 更新完了ページにフォワード
+        req.getRequestDispatcher("../subject/subject_update_complete.jsp").forward(req, res);
+    }
 }

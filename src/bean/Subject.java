@@ -1,26 +1,40 @@
 package bean;
 
 public class Subject implements java.io.Serializable {
+    // 学校情報を保持するフィールド
     private School school;
+    // 科目コードを保持するフィールド
     private String cd;
+    // 科目名を保持するフィールド
     private String name;
 
+    // schoolフィールドのゲッターメソッド
     public School getSchool() {
         return school;
     }
-    public void setSchool(School school){
-    	this.school=school;
+
+    // schoolフィールドのセッターメソッド
+    public void setSchool(School school) {
+        this.school = school;
     }
-    public String getCd(){
-    	return cd;
+
+    // cdフィールドのゲッターメソッド
+    public String getCd() {
+        return cd;
     }
-    public void setCd(String cd){
-    	this.cd=cd;
+
+    // cdフィールドのセッターメソッド
+    public void setCd(String cd) {
+        this.cd = cd;
     }
-    public String getName(){
-    	return name;
+
+    // nameフィールドのゲッターメソッド
+    public String getName() {
+        return name;
     }
-    public void setName(String name){
-    	this.name=name;
+
+    // nameフィールドのセッターメソッド
+    public void setName(String name) {
+        this.name = name;
     }
 }

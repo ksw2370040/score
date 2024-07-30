@@ -1,33 +1,52 @@
 package bean;
 
 public class Teacher implements java.io.Serializable {
+    // 教師のIDを保持するフィールド
     private String id;
+    // 教師のパスワードを保持するフィールド
     private String password;
+    // 教師の名前を保持するフィールド
     private String name;
+    // 学校情報を保持するフィールド
     private School school;
 
+    // idフィールドのゲッターメソッド
     public String getId() {
         return id;
     }
-    public void setId(String id){
-    	this.id=id;
+
+    // idフィールドのセッターメソッド
+    public void setId(String id) {
+        this.id = id;
     }
-    public String getName(){
-    	return name;
+
+    // nameフィールドのゲッターメソッド
+    public String getName() {
+        return name;
     }
-    public void setName(String name){
-    	this.name=name;
+
+    // nameフィールドのセッターメソッド
+    public void setName(String name) {
+        this.name = name;
     }
-    public String getPassword(){
-    	return password;
+
+    // passwordフィールドのゲッターメソッド
+    public String getPassword() {
+        return password;
     }
-    public void setPassword(String password){
-    	this.password=password;
+
+    // passwordフィールドのセッターメソッド
+    public void setPassword(String password) {
+        this.password = password;
     }
-    public School getSchool(){
-    	return school;
+
+    // schoolフィールドのゲッターメソッド
+    public School getSchool() {
+        return school;
     }
-    public void setSchool(School school){
-    	this.school=school;
+
+    // schoolフィールドのセッターメソッド
+    public void setSchool(School school) {
+        this.school = school;
     }
 }

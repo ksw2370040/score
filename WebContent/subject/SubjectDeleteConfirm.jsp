@@ -1,34 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.*" %>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-	<meta charset="UTF-8">
-	<title>削除確認</title>
-	 <link rel="stylesheet" type="text/css" href="../css/subject.css">
+    <meta charset="UTF-8">
+    <title>削除確認</title>
+    <link rel="stylesheet" type="text/css" href="../css/subject.css">
 </head>
 <body>
-<c:import url="../common/base.jsp">
-	<c:param name="title"></c:param>
-	<c:param name="scripts"></c:param>
-	<c:param name="content">
-	<section class="me-4">
-	<h2>科目削除確認</h2>
-
-
-
-						<p>「${subject.name}( ${subject.cd})」を削除してもよろしいですか</p>
-
-
-						<a class="delete-button" href="#" onclick="deleteSubject('${subject.cd}')">削除</a><br><br><br><br>
-
-
-
-<a href="../subject/SubjectList.action">戻る</a>	</section>
-	</c:param>
-</c:import>
+    <c:import url="../common/base.jsp">
+        <c:param name="title"></c:param>
+        <c:param name="scripts"></c:param>
+        <c:param name="content">
+            <section class="me-4">
+                <h2>科目削除確認</h2>
+                <p>「${subject.name}( ${subject.cd})」を削除してもよろしいですか</p>
+                <a class="delete-button" href="#" onclick="deleteSubject('${subject.cd}')">削除</a><br><br><br><br>
+                <a href="../subject/SubjectList.action">戻る</a>
+            </section>
+        </c:param>
+    </c:import>
 </body>
 <style>
     .delete-button {
@@ -63,7 +55,4 @@ function deleteSubject(subjectCd) {
     xhr.send();
 }
 </script>
-
-
-
 </html>
