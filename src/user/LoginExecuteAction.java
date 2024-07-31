@@ -31,7 +31,7 @@ public class LoginExecuteAction extends Action {
             } else {
                 // ユーザーが見つかった場合は、セッションにユーザーを保存し、メニュー画面に遷移
                 session.setAttribute("user", user);
-                req.getRequestDispatcher("/menu/menu.jsp").forward(req, res);
+                req.getRequestDispatcher("../menu/menu.jsp").forward(req, res);
             }
         } catch (Exception e) {
             // エラー発生時の処理
