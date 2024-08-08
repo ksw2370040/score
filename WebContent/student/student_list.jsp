@@ -5,30 +5,25 @@
 <head>
     <meta charset="UTF-8">
     <title>学生管理</title>
-    <!-- CSSスタイルシートをリンク -->
     <link rel="stylesheet" type="text/css" href="../css/student.css">
+
 </head>
 <body>
-    <!-- 共通のベースレイアウトをインポート -->
     <c:import url="../common/base.jsp">
-        <c:param name="title"></c:param> <!-- ページタイトルを設定 -->
-        <c:param name="scripts"></c:param> <!-- 必要なスクリプトを設定 -->
+        <c:param name="title"></c:param>
+        <c:param name="scripts"></c:param>
         <c:param name="content">
             <section class="me-4">
                 <h2>学生管理</h2>
-                <!-- 新規登録リンク -->
                 <div class="new">
                     <a href="StudentCreate.action">新規登録</a>
                 </div>
-
-                <!-- 学生情報のフィルタリングフォーム -->
                 <form method="get">
                     <div id="filter">
                         <div class="form-group">
                             <label for="student-f1-select">入学年度</label>
                             <select id="student-f1-select" name="f1">
                                 <option value="0">--------</option>
-                                <!-- 入学年度の選択肢を生成 -->
                                 <c:forEach var="year" items="${ent_year_set}">
                                     <option value="${year}" <c:if test="${year==f1 }">selected</c:if>>${year}</option>
                                 </c:forEach>
@@ -38,7 +33,6 @@
                             <label for="student-f2-select">クラス</label>
                             <select id="student-f2-select" name="f2">
                                 <option value="0">--------</option>
-                                <!-- クラスの選択肢を生成 -->
                                 <c:forEach var="num" items="${class_num_set}">
                                     <option value="${num}" <c:if test="${num==f2 }">selected</c:if>>${num}</option>
                                 </c:forEach>
@@ -46,23 +40,18 @@
                         </div>
                         <div>
                             <label for="student-f3-check">在学中
-                                <!-- チェックボックスで在学中かどうかを選択 -->
                                 <input type="checkbox" id="student-f3-check" name="f3" value="t" <c:if test="${!empty f3}">checked</c:if>>
                             </label>
                         </div>
                         <div>
-                            <!-- フィルタリングボタン -->
                             <button id="filter-button">絞込み</button>
                         </div>
-                        <!-- エラーメッセージを表示 -->
-                        <div style="color:red;">${errors.get("f1")}</div>
+                        <div style="color:red; ">${errors.get("f1")}</div>
                     </div>
                 </form>
-
-                <!-- 検索結果の表示 -->
                 <c:choose>
                     <c:when test="${students.size()>0}">
-                        <div>検索結果: ${students.size()}件</div>
+                        <div>検索結果:${students.size()}件</div>
                         <table>
                             <tr>
                                 <th>入学年度</th>
@@ -72,7 +61,6 @@
                                 <th class="center">在学中</th>
                                 <th></th>
                             </tr>
-                            <!-- 学生情報をテーブルに表示 -->
                             <c:forEach var="student" items="${students}">
                                 <tr>
                                     <td>${student.entYear}</td>
@@ -80,7 +68,6 @@
                                     <td>${student.name}</td>
                                     <td>${student.classNum}</td>
                                     <td class="center">
-                                        <!-- 在学中の状態を表示 -->
                                         <c:choose>
                                             <c:when test="${student.isAttend()}">
                                                 〇
@@ -90,14 +77,12 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
-                                    <!-- 学生情報の変更リンク -->
                                     <td><a href="StudentUpdate.action?no=${student.no}">変更</a></td>
                                 </tr>
                             </c:forEach>
                         </table>
                     </c:when>
                     <c:otherwise>
-                        <!-- 学生情報が存在しない場合のメッセージ -->
                         <div>学生情報が存在しませんでした</div>
                     </c:otherwise>
                 </c:choose>
