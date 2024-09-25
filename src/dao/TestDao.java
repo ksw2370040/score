@@ -33,43 +33,48 @@ public class TestDao extends Dao {
                    "LEFT JOIN SUBJECT ON a.SCHOOL_CD = SUBJECT.SCHOOL_CD " +
                    "WHERE a.SCHOOL_CD = ? ";
 
-    /**
-     * 特定の学生、科目、学校、テスト番号に基づいてテスト情報を取得します。
+    /*
+     * 特定の学生番号、科目、学校コード、テスト番号に基づいてテスト情報を取得します。
+     *
      * @param student 学生オブジェクト
      * @param subject 科目オブジェクト
      * @param school 学校オブジェクト
      * @param no テスト番号
-     * @return 該当するテストオブジェクト、存在しない場合はnull
-     * @throws Exception データベース接続やクエリ実行に関する例外
+     * @return 該当するテストを含むTestオブジェクト。見つからない場合はnullを返します。
+     * @throws Exception データベース接続やクエリ実行中に発生した例外をスローします。
      */
     public Test get(Student student, Subject subject, School school, int no) throws Exception {
         Test test = new Test();
         Connection connection = getConnection();
         PreparedStatement statement = null;
-        try {
-            statement = connection.prepareStatement("SELECT * FROM test WHERE student_no=? AND subject_cd=? AND school_cd=? AND no=?");
-            statement.setString(1, student.getNo());
-            statement.setString(2, subject.getCd());
-            statement.setString(3, school.getCd());
-            statement.setInt(4, no);
-            ResultSet rSet = statement.executeQuery();
-            SchoolDao schoolDao = new SchoolDao();
-            StudentDao studentDao = new StudentDao();
-            SubjectDao subjectDao = new SubjectDao();
 
-            if (rSet.next()) {
-                test.setStudent(studentDao.get(rSet.getString("student_no")));
-                test.setSubject(subjectDao.get(rSet.getString("subject_cd"), schoolDao.get(rSet.getString("school_cd"))));
-                test.setSchool(schoolDao.get(rSet.getString("school_cd")));
-                test.setNo(rSet.getInt("no"));
-                test.setPoint(rSet.getInt("point"));
-                test.setClassNum(rSet.getString("class_num"));
+        try {
+            // テスト情報を取得するSQLクエリを準備
+            statement = connection.prepareStatement("SELECT * FROM test WHERE student_no=? AND subject_cd=? AND school_cd=? AND no=?");
+            statement.setString(1, student.getNo()); // 学生番号を設定
+            statement.setString(2, subject.getCd()); // 科目コードを設定
+            statement.setString(3, school.getCd()); // 学校コードを設定
+            statement.setInt(4, no); // テスト番号を設定
+            ResultSet rSet = statement.executeQuery(); // クエリを実行
+
+            SchoolDao schoolDao = new SchoolDao(); // SchoolDaoのインスタンスを作成
+            StudentDao studentDao = new StudentDao(); // StudentDaoのインスタンスを作成
+            SubjectDao subjectDao = new SubjectDao(); // SubjectDaoのインスタンスを作成
+
+            if (rSet.next()) { // 結果セットにデータがある場合
+                test.setStudent(studentDao.get(rSet.getString("student_no"))); // 学生情報を設定
+                test.setSubject(subjectDao.get(rSet.getString("subject_cd"), schoolDao.get(rSet.getString("school_cd")))); // 科目情報を設定
+                test.setSchool(schoolDao.get(rSet.getString("school_cd"))); // 学校情報を設定
+                test.setNo(rSet.getInt("no")); // テスト番号を設定
+                test.setPoint(rSet.getInt("point")); // 得点を設定
+                test.setClassNum(rSet.getString("class_num")); // クラス番号を設定
             } else {
-                test = null;
+                test = null; // 該当するテストがない場合はnullを返す
             }
         } catch (Exception e) {
-            throw e;
+            throw e; // 例外が発生した場合は再スロー
         } finally {
+            // リソースをクリーンアップ
             if (statement != null) {
                 try {
                     statement.close();
@@ -85,48 +90,50 @@ public class TestDao extends Dao {
                 }
             }
         }
-        return test;
+        return test; // テストオブジェクトまたはnullを返す
     }
 
-    /**
-     * 結果セットからテストのリストを作成します。
+    /*
+     * ResultSetからデータを抽出し、リストを作成します。
+     *
      * @param rSet 結果セット
      * @param school 学校オブジェクト
-     * @return テストのリスト
+     * @return 抽出したテストのリスト
      * @throws Exception データベース関連の例外
      */
     private List<Test> postFilter(ResultSet rSet, School school) throws Exception {
-        List<Test> list = new ArrayList<>();
+        List<Test> list = new ArrayList<>(); // テストリストを初期化
         try {
-            while (rSet.next()) {
+            while (rSet.next()) { // 結果セットからデータを取得
                 String studentNo = rSet.getString("student_no");
                 String subjectCd = rSet.getString("subject_cd");
 
-                StudentDao stuDao = new StudentDao();
-                Student student = stuDao.get(studentNo);
+                StudentDao stuDao = new StudentDao(); // StudentDaoのインスタンスを作成
+                Student student = stuDao.get(studentNo); // 学生情報を取得
 
-                SubjectDao subDao = new SubjectDao();
-                Subject subject = subDao.get(subjectCd, school);
+                SubjectDao subDao = new SubjectDao(); // SubjectDaoのインスタンスを作成
+                Subject subject = subDao.get(subjectCd, school); // 科目情報を取得
 
-                Test test = new Test();
-                test.setSchool(school);
-                test.setNo(rSet.getInt("no"));
-                test.setClassNum(rSet.getString("class_num"));
-                test.setPoint(rSet.getInt("point"));
-                test.setStudent(student);
-                test.setSubject(subject);
+                Test test = new Test(); // 新しいTestオブジェクトを作成
+                test.setSchool(school); // 学校情報を設定
+                test.setNo(rSet.getInt("no")); // テスト番号を設定
+                test.setClassNum(rSet.getString("class_num")); // クラス番号を設定
+                test.setPoint(rSet.getInt("point")); // 得点を設定
+                test.setStudent(student); // 学生情報を設定
+                test.setSubject(subject); // 科目情報を設定
 
-                list.add(test);
+                list.add(test); // リストにテストを追加
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw e;
+            e.printStackTrace(); // エラーを表示
+            throw e; // 例外をスロー
         }
-        return list;
+        return list; // テストリストを返す
     }
 
     /**
      * 条件に基づいてテストのリストをフィルタリングします。
+     *
      * @param entYear 入学年
      * @param classNum クラス番号
      * @param subject 科目オブジェクト
@@ -136,26 +143,27 @@ public class TestDao extends Dao {
      * @throws Exception データベース関連の例外
      */
     public List<Test> filter(int entYear, String classNum, Subject subject, int num, School school) throws Exception {
-        List<Test> list = new ArrayList<>();
-        Connection connection = getConnection();
+        List<Test> list = new ArrayList<>(); // テストリストを初期化
+        Connection connection = getConnection(); // データベース接続を取得
         PreparedStatement statement = null;
         ResultSet rSet = null;
         String condition = " AND a.ENT_YEAR =? AND a.CLASS_NUM = ? AND SUBJECT.CD = ?";
 
         try {
-            statement = connection.prepareStatement(baseSql + condition);
+            statement = connection.prepareStatement(baseSql + condition); // SQLクエリを準備
             statement.setInt(1, num);
             statement.setInt(2, num);
             statement.setInt(3, num);
-            statement.setString(4, school.getCd());
-            statement.setInt(5, entYear);
-            statement.setString(6, classNum);
-            statement.setString(7, subject.getCd());
-            rSet = statement.executeQuery();
-            list = postFilter(rSet, school);
+            statement.setString(4, school.getCd()); // 学校コードを設定
+            statement.setInt(5, entYear); // 入学年を設定
+            statement.setString(6, classNum); // クラス番号を設定
+            statement.setString(7, subject.getCd()); // 科目コードを設定
+            rSet = statement.executeQuery(); // クエリを実行
+            list = postFilter(rSet, school); // 結果セットからリストを作成
         } catch (Exception e) {
-            throw e;
+            throw e; // 例外が発生した場合は再スロー
         } finally {
+            // リソースをクリーンアップ
             if (statement != null) {
                 try {
                     statement.close();
@@ -171,26 +179,28 @@ public class TestDao extends Dao {
                 }
             }
         }
-        return list;
+        return list; // フィルタリングされたテストリストを返す
     }
 
     /**
      * テストのリストを保存します。
+     *
      * @param list 保存するテストのリスト
      * @return 成功した場合はtrue、失敗した場合はfalse
      * @throws Exception データベース関連の例外
      */
     public boolean save(List<Test> list) throws Exception {
-        Connection connection = getConnection();
-        boolean result = false;
+        Connection connection = getConnection(); // データベース接続を取得
+        boolean result = false; // 成功フラグを初期化
         try {
             for (Test test : list) {
-                save(test, connection);
+                save(test, connection); // 各テストを保存
             }
-            result = true;
+            result = true; // 保存が成功した場合はtrueに設定
         } catch (Exception e) {
-            throw e;
+            throw e; // 例外が発生した場合は再スロー
         } finally {
+            // リソースをクリーンアップ
             if (connection != null) {
                 try {
                     connection.close();
@@ -199,11 +209,12 @@ public class TestDao extends Dao {
                 }
             }
         }
-        return result;
+        return result; // 保存結果を返す
     }
 
     /**
      * 単一のテストを保存します。
+     *
      * @param test 保存するテストオブジェクト
      * @param connection データベース接続
      * @return 成功した場合はtrue、失敗した場合はfalse
@@ -212,10 +223,12 @@ public class TestDao extends Dao {
     private boolean save(Test test, Connection connection) throws Exception {
         PreparedStatement statement = null;
         int count = 0;
-        Test old = null;
+        Test old = null; // 既存のテストを格納する変数
         try {
+            // 既存のテスト情報を取得
             old = get(test.getStudent(), test.getSubject(), test.getSchool(), test.getNo());
             if (old == null) {
+                // 既存のテストがない場合は新規挿入
                 statement = connection.prepareStatement("INSERT INTO test(STUDENT_NO, SUBJECT_CD, SCHOOL_CD, NO, POINT, CLASS_NUM) VALUES(?,?,?,?,?,?)");
                 statement.setString(1, test.getStudent().getNo());
                 statement.setString(2, test.getSubject().getCd());
@@ -224,6 +237,7 @@ public class TestDao extends Dao {
                 statement.setInt(5, test.getPoint());
                 statement.setString(6, test.getClassNum());
             } else {
+                // 既存のテストがある場合は更新
                 statement = connection.prepareStatement("UPDATE test SET POINT=? WHERE STUDENT_NO=? AND SUBJECT_CD=? AND SCHOOL_CD=? AND NO=?");
                 statement.setInt(1, test.getPoint());
                 statement.setString(2, test.getStudent().getNo());
@@ -231,11 +245,12 @@ public class TestDao extends Dao {
                 statement.setString(4, test.getSchool().getCd());
                 statement.setInt(5, test.getNo());
             }
-            count = statement.executeUpdate();
-            System.out.println(statement);
+            count = statement.executeUpdate(); // クエリを実行
+            System.out.println(statement); // 実行したステートメントを出力
         } catch (Exception e) {
-            throw e;
+            throw e; // 例外が発生した場合は再スロー
         } finally {
+            // リソースをクリーンアップ
             if (statement != null) {
                 try {
                     statement.close();
@@ -244,25 +259,27 @@ public class TestDao extends Dao {
                 }
             }
         }
-        return count > 0;
+        return count > 0; // 更新または挿入が成功した場合はtrueを返す
     }
 
     /**
      * テストのリストを削除します。
+     *
      * @param list 削除するテストのリスト
      * @return 成功した場合はtrue、失敗した場合はfalse
      * @throws Exception データベース関連の例外
      */
     public boolean delete(List<Test> list) throws Exception {
-        Connection connection = getConnection();
-        boolean result = true;
+        Connection connection = getConnection(); // データベース接続を取得
+        boolean result = true; // 成功フラグを初期化
         try {
             for (Test test : list) {
-                result = delete(test, connection);
+                result = delete(test, connection); // 各テストを削除
             }
         } catch (Exception e) {
-            throw e;
+            throw e; // 例外が発生した場合は再スロー
         } finally {
+            // リソースをクリーンアップ
             if (connection != null) {
                 try {
                     connection.close();
@@ -271,11 +288,12 @@ public class TestDao extends Dao {
                 }
             }
         }
-        return result;
+        return result; // 削除結果を返す
     }
 
     /**
      * 単一のテストを削除します。
+     *
      * @param test 削除するテストオブジェクト
      * @param connection データベース接続
      * @return 成功した場合はtrue、失敗した場合はfalse
@@ -285,17 +303,19 @@ public class TestDao extends Dao {
         PreparedStatement statement = null;
         int count = 0;
         try {
+            // テスト情報を削除するSQLクエリを準備
             statement = connection.prepareStatement("DELETE FROM test WHERE student_no=? AND subject_cd=? AND school_cd=? AND no=? AND class_num=?");
-            statement.setString(1, test.getStudent().getNo());
-            statement.setString(2, test.getSubject().getCd());
-            statement.setString(3, test.getSchool().getCd());
-            statement.setInt(4, test.getNo());
-            statement.setString(5, test.getClassNum());
-            count = statement.executeUpdate();
-            System.out.println(statement);
+            statement.setString(1, test.getStudent().getNo()); // 学生番号を設定
+            statement.setString(2, test.getSubject().getCd()); // 科目コードを設定
+            statement.setString(3, test.getSchool().getCd()); // 学校コードを設定
+            statement.setInt(4, test.getNo()); // テスト番号を設定
+            statement.setString(5, test.getClassNum()); // クラス番号を設定
+            count = statement.executeUpdate(); // クエリを実行
+            System.out.println(statement); // 実行したステートメントを出力
         } catch (Exception e) {
-            throw e;
+            throw e; // 例外が発生した場合は再スロー
         } finally {
+            // リソースをクリーンアップ
             if (statement != null) {
                 try {
                     statement.close();
@@ -304,6 +324,6 @@ public class TestDao extends Dao {
                 }
             }
         }
-        return count > 0;
+        return count > 0; // 削除が成功した場合はtrueを返す
     }
 }

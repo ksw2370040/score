@@ -31,90 +31,96 @@ public class TestListSubjectDao extends Dao {
                               "AND STUDENT.CLASS_NUM = ? " +
                               "AND SUBJECT.CD = ?";
 
-    /**
-     * 結果セットから TestListSubject のリストを作成します。
-     * @param rSet 結果セット
-     * @return TestListSubject のリスト
-     * @throws Exception データベース関連の例外
+    /*
+     * ResultSetからデータを抽出し、TestListSubjectオブジェクトのリストを作成します。
+     *
+     * @param rSet SQLクエリの結果セット
+     * @return TestListSubjectのリスト
+     * @throws Exception SQL処理中に発生した例外をスローします。
      */
     private List<TestListSubject> postFilter(ResultSet rSet) throws Exception {
-        List<TestListSubject> list = new ArrayList<>();
+        List<TestListSubject> list = new ArrayList<>(); // TestListSubjectのリストを初期化
         try {
-            while (rSet.next()) {
-                TestListSubject TLS = new TestListSubject();
-                Map<Integer, Integer> points = new HashMap<>();
+            while (rSet.next()) { // 結果セットからデータを取得
+                TestListSubject TLS = new TestListSubject(); // 新しいTestListSubjectオブジェクトを作成
+                Map<Integer, Integer> points = new HashMap<>(); // 点数を保持するマップを作成
 
-                String studentName = rSet.getString("student_name");
-                String studentNo = rSet.getString("student_no");
-                String classNum = rSet.getString("class_num");
-                int entYear = rSet.getInt("ent_year");
-                int point1 = rSet.getInt("point1");
-                int point2 = rSet.getInt("point2");
+                // 学生情報を取得
+                String studentName = rSet.getString("student_name"); // 学生名を取得
+                String studentNo = rSet.getString("student_no"); // 学生番号を取得
+                String classNum = rSet.getString("class_num"); // クラス番号を取得
+                int entYear = rSet.getInt("ent_year"); // 入学年を取得
+                int point1 = rSet.getInt("point1"); // テスト1の点数を取得
+                int point2 = rSet.getInt("point2"); // テスト2の点数を取得
 
+                // 点数をマップに追加
                 points.put(1, point1);
                 points.put(2, point2);
 
+                // TestListSubjectオブジェクトにデータを設定
                 TLS.setStudentName(studentName);
                 TLS.setStudentNo(studentNo);
                 TLS.setClassNum(classNum);
                 TLS.setEntYear(entYear);
                 TLS.setPoints(points);
 
-                list.add(TLS);
+                list.add(TLS); // リストに追加
             }
         } catch (SQLException | NullPointerException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // エラーを表示
         }
-        return list;
+        return list; // TestListSubjectのリストを返す
     }
 
-    /**
+    /*
      * 学校、年度、クラス、科目に基づいてテスト情報をフィルタリングします。
-     * @param entYear 年度
+     *
+     * @param entYear 入学年度
      * @param classNum クラス番号
      * @param subject 科目オブジェクト
      * @param school 学校オブジェクト
-     * @return TestListSubject のリスト
-     * @throws Exception データベース関連の例外
+     * @return フィルタリングされたTestListSubjectのリスト
+     * @throws Exception SQL処理中に発生した例外をスローします。
      */
     public List<TestListSubject> filter(int entYear, String classNum, Subject subject, School school) throws Exception {
-        List<TestListSubject> list = new ArrayList<>();
-        Connection connection = getConnection();
-        PreparedStatement statement = null;
-        ResultSet rSet = null;
+        List<TestListSubject> list = new ArrayList<>(); // TestListSubjectのリストを初期化
+        Connection connection = getConnection(); // データベース接続を取得
+        PreparedStatement statement = null; // PreparedStatementを初期化
+        ResultSet rSet = null; // ResultSetを初期化
         try {
-            statement = connection.prepareStatement(baseSql);
-            statement.setString(1, school.getCd());
-            statement.setInt(2, entYear);
-            statement.setString(3, classNum);
-            statement.setString(4, subject.getCd());
-            rSet = statement.executeQuery();
-            list = postFilter(rSet);
+            statement = connection.prepareStatement(baseSql); // SQLクエリを準備
+            statement.setString(1, school.getCd()); // 学校コードを設定
+            statement.setInt(2, entYear); // 入学年を設定
+            statement.setString(3, classNum); // クラス番号を設定
+            statement.setString(4, subject.getCd()); // 科目コードを設定
+            rSet = statement.executeQuery(); // クエリを実行
+            list = postFilter(rSet); // 結果セットからリストを作成
         } catch (Exception e) {
-            throw e;
+            throw e; // 例外を再スロー
         } finally {
+            // リソースをクリーンアップ
             if (rSet != null) {
                 try {
-                    rSet.close();
+                    rSet.close(); // ResultSetを閉じる
                 } catch (SQLException sqle) {
-                    throw sqle;
+                    throw sqle; // エラーが発生した場合は例外をスロー
                 }
             }
             if (statement != null) {
                 try {
-                    statement.close();
+                    statement.close(); // PreparedStatementを閉じる
                 } catch (SQLException sqle) {
-                    throw sqle;
+                    throw sqle; // エラーが発生した場合は例外をスロー
                 }
             }
             if (connection != null) {
                 try {
-                    connection.close();
+                    connection.close(); // 接続を閉じる
                 } catch (SQLException sqle) {
-                    throw sqle;
+                    throw sqle; // エラーが発生した場合は例外をスロー
                 }
             }
         }
-        return list;
+        return list; // フィルタリングされたTestListSubjectのリストを返す
     }
 }

@@ -37,21 +37,22 @@ public class TestRegist2ExecuteAction extends Action {
 
         // 取得したテストの数だけループ
         for (int i = 0; i < Integer.parseInt(count); i++) {
-
             Student student = new Student(); // 学生オブジェクトを生成
             Subject subject = new Subject(); // 科目オブジェクトを生成
             Test test = new Test(); // テストオブジェクトを生成
 
             // 各パラメータを整数に変換し、対応するオブジェクトに設定
-            int point = Integer.parseInt(pointstr[i]);
-            int no = Integer.parseInt(nostr[i]);
-            String studentNo = student_nos[i];
-            String subjectCd = subject_cds[i];
-            String classNum = class_nums[i];
+            int point = Integer.parseInt(pointstr[i]); // テストの点数を取得
+            int no = Integer.parseInt(nostr[i]); // テスト番号を取得
+            String studentNo = student_nos[i]; // 学生番号を取得
+            String subjectCd = subject_cds[i]; // 科目コードを取得
+            String classNum = class_nums[i]; // クラス番号を取得
 
+            // 学生オブジェクトに情報を設定
             student.setNo(studentNo); // 学生番号を設定
             subject.setCd(subjectCd); // 科目コードを設定
 
+            // テストオブジェクトに情報を設定
             test.setPoint(point); // テストの点数を設定
             test.setNo(no); // テスト番号を設定
             test.setStudent(student); // 学生オブジェクトを設定

@@ -15,49 +15,50 @@ import tool.Action;
 import tool.Util;
 
 public class TestDeleteExecuteAction extends Action {
-    /**
-     * テスト削除処理を実行します。
+    /*
+     * テストの点数の削除処理を実行します。
+     *
      * @param req HTTPリクエスト
      * @param res HTTPレスポンス
-     * @throws Exception 処理中に発生する可能性のある例外
+     * @throws Exception 処理中に発生した例外をスローします。
      */
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
-        Util util = new Util();
+        Util util = new Util(); // ユーティリティクラスのインスタンスを生成
 
-        List<Test> tests = new ArrayList<>();
-        Teacher teacher = util.getUser(req);
+        List<Test> tests = new ArrayList<>(); // Testオブジェクトのリストを初期化
+        Teacher teacher = util.getUser(req); // 現在のユーザー（教師）を取得
 
         // リクエストからパラメータを取得
-        String[] studentNos = req.getParameterValues("student_no");
-        String[] subjectCds = req.getParameterValues("subject_cd");
-        String[] classNums = req.getParameterValues("class_num");
-        String[] nostr = req.getParameterValues("test_no");
-        String countStr = req.getParameter("count");
+        String[] studentNos = req.getParameterValues("student_no"); // 学生番号の配列を取得
+        String[] subjectCds = req.getParameterValues("subject_cd"); // 科目コードの配列を取得
+        String[] classNums = req.getParameterValues("class_num"); // クラス番号の配列を取得
+        String[] nostr = req.getParameterValues("test_no"); // テスト番号の配列を取得
+        String countStr = req.getParameter("count"); // テストの件数を取得
 
         // TestDaoのインスタンスを生成
         TestDao dao = new TestDao();
 
         // テスト削除のためのTestオブジェクトを作成
         for (int i = 0; i < Integer.parseInt(countStr); i++) {
-            Student student = new Student();
-            Subject subject = new Subject();
-            Test test = new Test();
+            Student student = new Student(); // 新しいStudentオブジェクトを作成
+            Subject subject = new Subject(); // 新しいSubjectオブジェクトを作成
+            Test test = new Test(); // 新しいTestオブジェクトを作成
 
-            int no = Integer.parseInt(nostr[i]);
-            String studentNo = studentNos[i];
-            String subjectCd = subjectCds[i];
-            String classNum = classNums[i];
+            int no = Integer.parseInt(nostr[i]); // テスト番号を取得
+            String studentNo = studentNos[i]; // 学生番号を取得
+            String subjectCd = subjectCds[i]; // 科目コードを取得
+            String classNum = classNums[i]; // クラス番号を取得
 
-            student.setNo(studentNo);
-            subject.setCd(subjectCd);
+            student.setNo(studentNo); // 学生番号を設定
+            subject.setCd(subjectCd); // 科目コードを設定
 
-            test.setNo(no);
-            test.setStudent(student);
-            test.setSubject(subject);
-            test.setClassNum(classNum);
-            test.setSchool(teacher.getSchool());
+            test.setNo(no); // テスト番号を設定
+            test.setStudent(student); // 学生情報を設定
+            test.setSubject(subject); // 科目情報を設定
+            test.setClassNum(classNum); // クラス番号を設定
+            test.setSchool(teacher.getSchool()); // 学校情報を設定
 
-            tests.add(test);
+            tests.add(test); // テスト情報をリストに追加
         }
 
         // TestDaoを使ってテストを削除

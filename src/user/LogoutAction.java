@@ -6,7 +6,10 @@ import javax.servlet.http.HttpSession;
 
 import tool.Action;
 
+// ログアウトアクションを処理するクラス
 public class LogoutAction extends Action {
+
+    // HTTPリクエストに基づくアクションの実行
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws Exception {
         // 現在のセッションを取得

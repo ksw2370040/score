@@ -9,11 +9,8 @@ public class Dao {
     // DataSourceの静的インスタンス
     static DataSource ds;
 
-    /**
-     * データベース接続を取得します。
-     * DataSourceが初期化されていない場合は、JNDIから取得して初期化します。
-     * @return データベース接続
-     * @throws Exception JNDI lookupや接続に関する例外
+    /*
+     データベース接続を取得します。
      */
     public Connection getConnection() throws Exception {
         // DataSourceが未初期化の場合

@@ -9,14 +9,16 @@ import bean.School;
 
 public class SchoolDao extends Dao {
 
-    /**
-     * 学校コードに基づいて学校情報を取得します。
-     * @param cd 学校コード
-     * @return 学校オブジェクト。学校が見つからなかった場合はnull
-     * @throws Exception データベース接続やクエリ実行に関する例外
+    /*
+     * 学校コードに基づいて学校情報を取得するメソッド。
+     * 指定された学校コードに該当する学校の情報をデータベースから取得し、Schoolオブジェクトとして返します。
+     *
+     * @param cd 学校コード (String)
+     * @return 学校情報を含むSchoolオブジェクト。見つからなかった場合はnullを返します。
+     * @throws Exception データベース接続やクエリ実行中に発生した例外をスローします。
      */
     public School get(String cd) throws Exception {
-        School school = new School(); // 新しい学校オブジェクトを作成
+        School school = new School(); // 学校情報を格納するSchoolオブジェクトを作成
         Connection connection = getConnection(); // データベース接続を取得
         PreparedStatement statement = null;
         try {
@@ -25,29 +27,32 @@ public class SchoolDao extends Dao {
             statement.setString(1, cd); // プレースホルダーに学校コードを設定
             ResultSet rSet = statement.executeQuery(); // クエリを実行し、結果セットを取得
             if (rSet.next()) { // 結果セットにデータがある場合
-                // 学校オブジェクトにデータを設定
-                school.setCd(rSet.getString("cd"));
-                school.setName(rSet.getString("name"));
+                // 結果セットから学校情報を抽出し、Schoolオブジェクトに設定
+                school.setCd(rSet.getString("cd")); // 学校コードをセット
+                school.setName(rSet.getString("name")); // 学校名をセット
             } else {
                 // 学校が見つからない場合はnullを返す
                 school = null;
             }
         } catch (Exception e) {
-            throw e; // 例外が発生した場合は再スロー
+            // クエリ実行中に発生した例外をスロー
+            throw e;
         } finally {
-            // リソースをクリーンアップ
+            // リソースのクリーンアップを行う
             if (statement != null) {
                 try {
                     statement.close(); // PreparedStatementを閉じる
                 } catch (SQLException sqle) {
-                    throw sqle; // 例外が発生した場合は再スロー
+                    // PreparedStatementを閉じる際に発生した例外をスロー
+                    throw sqle;
                 }
             }
             if (connection != null) {
                 try {
                     connection.close(); // Connectionを閉じる
                 } catch (SQLException sqle) {
-                    throw sqle; // 例外が発生した場合は再スロー
+                    // Connectionを閉じる際に発生した例外をスロー
+                    throw sqle;
                 }
             }
         }

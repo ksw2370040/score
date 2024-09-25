@@ -1,21 +1,22 @@
 package tool;
 
-import java.io.IOException;
+import java.io.IOException; // 入出力関連の例外を扱うためのクラス
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException; // サーブレット関連の例外を扱うためのクラス
+import javax.servlet.annotation.WebServlet; // サーブレットのアノテーションを使用するためのクラス
+import javax.servlet.http.HttpServlet; // HTTPサーブレットの基本クラス
+import javax.servlet.http.HttpServletRequest; // HTTPリクエストを表すクラス
+import javax.servlet.http.HttpServletResponse; // HTTPレスポンスを表すクラス
 
 // URLパターンが "*.action" のリクエストを処理するサーブレット
-@WebServlet(urlPatterns = {"*.action"})
+@WebServlet(urlPatterns = {"*.action"}) // "*.action"にマッチするリクエストを処理
 public class FrontController extends HttpServlet {
 
     // GETリクエストを処理するメソッド
     @Override
     public void doGet(
-            HttpServletRequest req, HttpServletResponse res
+            HttpServletRequest req, // HTTPリクエストオブジェクト
+            HttpServletResponse res // HTTPレスポンスオブジェクト
     ) throws ServletException, IOException {
         try {
             // リクエストパスからアクションクラスの名前を生成
@@ -33,16 +34,17 @@ public class FrontController extends HttpServlet {
             action.execute(req, res);
         } catch (Exception e) {
             // 例外が発生した場合、エラーページにフォワード
-            e.printStackTrace();
-            req.getRequestDispatcher("../common/error.jsp").forward(req, res);
+            e.printStackTrace(); // エラーのスタックトレースを出力
+            req.getRequestDispatcher("../common/error.jsp").forward(req, res); // エラーページにフォワード
         }
     }
 
     // POSTリクエストもGETリクエストとして処理
     @Override
     public void doPost(
-            HttpServletRequest req, HttpServletResponse res
+            HttpServletRequest req, // HTTPリクエストオブジェクト
+            HttpServletResponse res // HTTPレスポンスオブジェクト
     ) throws ServletException, IOException {
-        doGet(req, res);
+        doGet(req, res); // POSTリクエストをGETリクエストとして処理
     }
 }
