@@ -1,61 +1,70 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="java.util.*" %> <!-- java.utilパッケージをインポート -->
+<%@ page import="java.util.*" %>
 
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-	<meta charset="UTF-8"> <!-- 文字エンコーディングをUTF-8に設定 -->
-	<title>削除確認</title> <!-- ページタイトル -->
-	<link rel="stylesheet" type="text/css" href="../css/subject.css"> <!-- スタイルシートをリンク -->
+    <meta charset="UTF-8"> <!-- 文字エンコーディングを指定 -->
+    <title>削除確認</title> <!-- ページタイトル -->
+    <link rel="stylesheet" type="text/css" href="../css/subject.css"> <!-- CSSファイルをリンク -->
 </head>
 <body>
-<c:import url="../common/base.jsp"> <!-- 共通のベースページをインポート -->
-	<c:param name="title"></c:param> <!-- ページタイトルを設定（空） -->
-	<c:param name="scripts"></c:param> <!-- スクリプトを設定（空） -->
-	<c:param name="content"> <!-- コンテンツ部分を定義 -->
-	<section class="me-4"> <!-- セクションを作成 -->
-		<h2>科目削除確認</h2> <!-- 見出し -->
-		<p>「${subject.name}( ${subject.cd})」を削除してもよろしいですか</p> <!-- 削除する科目名とコードを表示 -->
-		<a class="delete-button" href="#" onclick="deleteSubject('${subject.cd}')">削除</a><br><br><br><br> <!-- 削除ボタン -->
-		<a href="../subject/SubjectList.action">戻る</a> <!-- 科目一覧へのリンク -->
-	</section>
-	</c:param>
-</c:import>
+	<!-- 共通の基盤となるJSPをインポート -->
+    <c:import url="../common/base.jsp">
+        <c:param name="title"></c:param>
+        <c:param name="scripts"></c:param>
+        <c:param name="content">
+            <section class="me-4"> <!-- メインコンテンツセクション -->
+                <h2>科目削除確認</h2> <!-- セクション見出し -->
 
+                <p>「${subject.name}( ${subject.cd})」を削除してもよろしいですか</p> <!-- 削除対象の科目名とコードを表示 -->
+
+                <!-- 削除ボタン。クリックでdeleteSubject関数を呼び出す -->
+                <a class="delete-button" href="#" onclick="deleteSubject('${subject.cd}')">削除</a><br><br><br><br>
+
+                <a href="../subject/SubjectList.action">戻る</a> <!-- 戻るリンク -->
+            </section>
+        </c:param>
+    </c:import>
+</body>
+
+<!-- スタイルを定義 -->
 <style>
-    .delete-button { /* 削除ボタンのスタイル */
-        display: inline-block; /* インラインブロック要素にする */
-        padding: 5px 10px; /* 内側の余白 */
-        margin: 5px 0; /* 外側の余白 */
+    .delete-button {
+        display: inline-block; /* ボタンをインラインブロックとして表示 */
+        padding: 5px 10px; /* ボタンの内側の余白 */
+        margin: 5px 0; /* ボタンの外側の余白 */
         font-size: 14px; /* フォントサイズ */
         font-weight: bold; /* フォントを太字に */
-        color: #fff; /* 文字色を白に */
-        background-color: #d9534f; /* 背景色を赤に */
-        border: none; /* ボーダーなし */
-        border-radius: 4px; /* 角を丸く */
-        text-decoration: none; /* 下線を削除 */
+        color: #fff; /* 文字色 */
+        background-color: #d9534f; /* ボタンの背景色 */
+        border: none; /* ボタンの境界線なし */
+        border-radius: 4px; /* 角を丸くする */
+        text-decoration: none; /* テキストの下線なし */
         text-align: center; /* テキストを中央揃え */
     }
 
-    .delete-button:hover { /* ホバー時のスタイル */
-        background-color: #c9302c; /* 背景色を少し暗い赤に */
+    .delete-button:hover {
+        background-color: #c9302c; /* ホバー時の背景色 */
     }
 </style>
 
 <script type="text/javascript">
-function deleteSubject(subjectCd) { // 科目を削除する関数
+// 削除処理を実行する関数
+function deleteSubject(subjectCd) {
     // XMLHttpRequestを使用して削除リクエストを送信
-    var xhr = new XMLHttpRequest(); // 新しいXMLHttpRequestオブジェクトを作成
-    xhr.open("GET", "SubjectDeleteExecute.action?cd=" + subjectCd, true); // リクエストの初期化
-    xhr.onreadystatechange = function () { // リクエストの状態が変わるたびに実行される関数
-        if (xhr.readyState == 4 && xhr.status == 200) { // リクエストが完了し、成功した場合
-            // リクエストが成功した場合、削除完了画面にリダイレクト
-            window.location.href = "deleteSuccess.jsp"; // 削除成功画面へ遷移
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "SubjectDeleteExecute.action?cd=" + subjectCd, true); // 削除リクエストを設定
+    xhr.onreadystatechange = function () {
+        // リクエストが成功した場合の処理
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            // 削除完了画面にリダイレクト
+            window.location.href = "deleteSuccess.jsp";
         }
     };
     xhr.send(); // リクエストを送信
 }
 </script>
-</body>
+
 </html>

@@ -4,36 +4,37 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-	<meta charset="UTF-8"> <!-- 文字エンコーディングをUTF-8に設定 -->
+    <meta charset="UTF-8"> <!-- 文字エンコーディングを指定 -->
     <title>科目管理</title> <!-- ページタイトル -->
-    <link rel="stylesheet" type="text/css" href="../css/subject.css"> <!-- スタイルシートをリンク -->
+    <link rel="stylesheet" type="text/css" href="../css/subject.css"> <!-- CSSファイルをリンク -->
 </head>
 <body>
-	<c:import url="../common/base.jsp"> <!-- 共通のベースページをインポート -->
-		<c:param name="title"></c:param> <!-- ページタイトルを設定（空） -->
-		<c:param name="scripts"></c:param> <!-- スクリプトを設定（空） -->
-		<c:param name="content"> <!-- コンテンツ部分を定義 -->
-			<section class="me-4"> <!-- セクションを作成 -->
-				<form action="SubjectUpdateExecute.action" method="get"> <!-- フォームの開始 -->
-					<div id="filter"> <!-- フィルタコンテナ -->
-						<h2>科目情報変更</h2> <!-- 見出し -->
-						<div>
-							<label>科目コード</label> <!-- 科目コードのラベル -->
-							<p>&ensp;&ensp;${subject.cd}</p> <!-- 科目コードの表示 -->
-							<input id="radius" type="hidden" name="cd" value="${subject.cd}" required> <!-- 隠しフィールドで科目コードを保持 -->
-						</div>
-						<div>
-							<label>科目名</label> <!-- 科目名のラベル -->
-							<input id="subject-name" type="text" name="name" placeholder="科目名を入力してください" maxlength="30" required> <!-- 科目名入力フィールド -->
-						</div>
-						<div>
-							<button id="button">変更</button> <!-- 変更ボタン -->
-						</div>
-						<p><a href="../subject/SubjectList.action">戻る</a></p> <!-- 科目一覧へのリンク -->
-					</div>
-				</form>
-			</section>
-		</c:param>
-	</c:import>
+<!-- 共通の基盤となるJSPをインポート -->
+    <c:import url="../common/base.jsp">
+        <c:param name="title"></c:param>
+        <c:param name="scripts"></c:param>
+        <c:param name="content">
+            <section class="me-4"> <!-- メインコンテンツセクション -->
+                <form action="SubjectUpdateExecute.action" method="get"> <!-- フォームの開始 -->
+                    <div id="filter"> <!-- フィルタ用のコンテナ -->
+                        <h2>科目情報変更</h2> <!-- セクション見出し -->
+                        <div> <!-- 科目コードの入力欄 -->
+                            <label>科目コード</label> <!-- ラベル -->
+                            <p>&ensp;&ensp;${subject.cd}</p> <!-- 現在の科目コードを表示 -->
+                            <input id="radius" type="hidden" name="cd" value="${subject.cd}" required> <!-- 科目コードを隠しフィールドで送信 -->
+                        </div>
+                        <div> <!-- 科目名の入力欄 -->
+                            <label>科目名</label> <!-- ラベル -->
+                            <input id="subject-name" type="text" name="name" placeholder="科目名を入力してください" maxlength="30" required> <!-- 科目名の入力 -->
+                        </div>
+                        <div> <!-- ボタン用のコンテナ -->
+                            <button id="button">変更</button> <!-- 変更ボタン -->
+                        </div>
+                        <p><a href="../subject/SubjectList.action">戻る</a> <!-- 戻るリンク -->
+                    </div> <!-- フィルタコンテナの終了 -->
+                </form> <!-- フォームの終了 -->
+            </section>
+        </c:param>
+    </c:import>
 </body>
 </html>

@@ -1,50 +1,55 @@
-<%@ page contentType="text/html; charset=UTF-8" %> <!-- ページのコンテンツタイプと文字エンコーディングを設定 -->
+<%@ page contentType="text/html; charset=UTF-8" %> <!-- ページのコンテンツタイプと文字エンコーディングを指定 -->
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8"> <!-- 文字エンコーディングをUTF-8に設定 -->
+    <meta charset="UTF-8"> <!-- 文字エンコーディングを指定 -->
     <title>得点管理システム</title> <!-- ページタイトル -->
-    <link href="../css/stylesheet.css" rel="stylesheet" /> <!-- スタイルシートをリンク -->
+    <link href="../css/stylesheet.css" rel="stylesheet" /> <!-- CSSスタイルシートをリンク -->
     <style>
-        /* フォームグループのスタイル設定 */
+        /* フォームグループのスタイル */
         .form-group {
-            position: relative; /* ラベルを相対的に配置 */
-            margin-bottom: 20px; /* 各フォームグループの間にスペースを作成 */
+            position: relative; /* 相対位置を設定 */
+            margin-bottom: 20px; /* 下のマージンを設定 */
         }
+        /* 入力フィールドのスタイル */
         .form-group input {
-            width: 100%; /* 入力フィールドの幅を100%に設定 */
-            height: 60px; /* 入力フィールドの高さを設定 */
-            padding: 20px 10px 10px 10px; /* 内側の余白を設定 */
-            box-sizing: border-box; /* ボックスモデルのサイズ計算を設定 */
+            width: 100%; /* 幅を100%に設定 */
+            height: 60px; /* 高さを設定 */
+            padding: 20px 10px 10px 10px; /* 内部パディングを設定 */
+            box-sizing: border-box; /* ボックスモデルを調整 */
             border-radius: 10px; /* 角を丸くする */
-            border: 1px solid #ccc; /* 枠線の色を設定 */
+            border: 1px solid #ccc; /* ボーダーのスタイルを設定 */
         }
+        /* ラベルのスタイル */
         .form-group label {
-            position: absolute; /* ラベルを絶対的に配置 */
+            position: absolute; /* 絶対位置を設定 */
             top: 0; /* 上端を0に設定 */
             left: 10px; /* 左端を10pxに設定 */
-            padding: 10px; /* 内側の余白を設定 */
-            pointer-events: none; /* ラベルをクリック不可に設定 */
-            color: #aaa; /* ラベルの初期色を設定 */
+            padding: 10px; /* パディングを設定 */
+            pointer-events: none; /* ポインターイベントを無効に */
+            color: #aaa; /* 色を設定 */
             font-size: 12px; /* フォントサイズを設定 */
             transition: 0.2s; /* トランジション効果を設定 */
         }
+        /* 入力フィールドがフォーカスまたはプレースホルダが表示されていない場合のラベルのスタイル */
         .form-group input:focus + label,
         .form-group input:not(:placeholder-shown) + label {
-            top: -10px; /* 入力フィールドがフォーカスされたとき、または内容が表示されているときにラベルを上に移動 */
-            left: 10px; /* ラベルの左位置を設定 */
-            font-size: 10px; /* ラベルのフォントサイズを小さくする */
-            color: #333; /* ラベルの色を変更 */
+            top: -10px; /* 上に移動 */
+            left: 10px; /* 左端を10pxに設定 */
+            font-size: 10px; /* フォントサイズを小さく */
+            color: #333; /* 色を濃く */
         }
+        /* フッターのスタイル */
         footer {
-            position: fixed; /* フッターを固定位置に設定 */
-            bottom: 0; /* 画面の下部に配置 */
-            height: 50px; /* フッターの高さを設定 */
+            position: fixed; /* 固定位置 */
+            bottom: 0; /* 下端に固定 */
+            height: 50px; /* 高さを設定 */
         }
+        /* エラーメッセージのスタイル */
         .error-message {
-            color: red; /* エラーメッセージの色を赤に設定 */
+            color: red; /* 赤色 */
             font-size: 12px; /* フォントサイズを設定 */
-            margin-bottom: 10px; /* エラーメッセージの下に余白を追加 */
+            margin-bottom: 10px; /* 下のマージンを設定 */
         }
     </style>
 </head>
@@ -52,44 +57,45 @@
 <header>
     <h1>得点管理システム</h1> <!-- ヘッダーにシステム名を表示 -->
 </header>
-<div class="box-container"> <!-- ログインボックスのコンテナ -->
-    <div class="login-box"> <!-- ログインボックス -->
-        <h2>ログイン</h2> <!-- ログインセクションの見出し -->
-        <form action="../user/LoginExecute.action" method="post"> <!-- フォームの送信先を設定 -->
+<div class="box-container">
+    <div class="login-box">
+        <h2>ログイン</h2> <!-- ログインフォームのタイトル -->
+        <form action="../user/LoginExecute.action" method="post"> <!-- フォーム送信先 -->
             <%
-                // リクエスト属性からログインエラーメッセージを取得し、表示する
-                String loginError = (String) request.getAttribute("loginError"); // ログインエラーメッセージを取得
+                // リクエストからログインエラーメッセージを取得
+                String loginError = (String) request.getAttribute("loginError");
                 if (loginError != null) { // エラーメッセージが存在する場合
             %>
                 <div class="error-message"><%= loginError %></div> <!-- エラーメッセージを表示 -->
             <% } %>
-            <div class="form-group"> <!-- ID入力用のフォームグループ -->
-                <input type="text" id="id" name="id" maxlength="20" pattern="[a-zA-Z0-9]+" required placeholder="半角でご入力ください"> <!-- ID入力フィールド -->
-                <label for="id">ID</label> <!-- IDラベル -->
+            <div class="form-group">
+                <input type="text" id="id" name="id" maxlength="20" pattern="[a-zA-Z0-9]+" required placeholder="半角でご入力ください">
+                <label for="id">ID</label> <!-- IDのラベル -->
             </div>
-            <div class="form-group"> <!-- パスワード入力用のフォームグループ -->
-                <input type="password" name="password" id="password" required placeholder="20文字以内の半角英数字でご入力ください"> <!-- パスワード入力フィールド -->
-                <label for="password">パスワード</label> <!-- パスワードラベル -->
+            <div class="form-group">
+                <input type="password" name="password" id="password" required placeholder="20文字以内の半角英数字でご入力ください">
+                <label for="password">パスワード</label> <!-- パスワードのラベル -->
             </div>
-            <p><input type="checkbox" id="showPassword" onclick="togglePasswordVisibility()"> パスワードを表示</p> <!-- パスワード表示用のチェックボックス -->
+            <p><input type="checkbox" id="showPassword" onclick="togglePasswordVisibility()"> パスワードを表示</p> <!-- パスワード表示用チェックボックス -->
             <p><input type="submit" value="ログイン"></p> <!-- ログインボタン -->
         </form>
     </div>
 </div>
 <script type="text/javascript">
-    function togglePasswordVisibility() { // パスワードの表示/非表示を切り替える関数
-        var passwordField = document.getElementById("password"); // パスワードフィールドを取得
-        var checkbox = document.getElementById("showPassword"); // チェックボックスを取得
-        if (checkbox.checked) { // チェックボックスがチェックされている場合
-            passwordField.type = "text"; // パスワードを表示
+    function togglePasswordVisibility() {
+        // パスワードの表示/非表示を切り替える関数
+        var passwordField = document.getElementById("password");
+        var checkbox = document.getElementById("showPassword");
+        if (checkbox.checked) {
+            passwordField.type = "text"; // チェックボックスが選択されている場合はテキストに設定
         } else {
-            passwordField.type = "password"; // パスワードを隠す
+            passwordField.type = "password"; // チェックボックスが選択されていない場合はパスワードに設定
         }
     }
 </script>
 <footer>
-    <p>© 2023 TIC</p> <!-- フッターに著作権情報 -->
-    <p>大原学園</p> <!-- フッターに学校名 -->
+    <p>© 2023 TIC</p> <!-- 著作権表示 -->
+    <p>大原学園</p> <!-- 学校名 -->
 </footer>
 </body>
 </html>
